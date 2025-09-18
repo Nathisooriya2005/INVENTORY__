@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exchange-alt me-2"></i>{{ title }}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Note:</strong> You can leave either "From Location" or "To Location" empty:
+                        <ul class="mb-0 mt-2">
+                            <li>Leave "From Location" empty for incoming stock (receiving goods)</li>
+                            <li>Leave "To Location" empty for not sold (goods moving out)</li>
+                            <li>Fill both for internal transfers between locations</li>
+                        </ul>
+                    </div>
+
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.movement_id.label(class="form-label") }}
+                            {{ form.movement_id(class="form-control") }}
+                            {% if form.movement_id.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.movement_id.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.product_id.label(class="form-label") }}
+                            {{ form.product_id(class="form-select") }}
+                            {% if form.product_id.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.product_id.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.from_location.label(class="form-label") }}
+                                    {{ form.from_location(class="form-select") }}
+                                    {% if form.from_location.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in form.from_location.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.to_location.label(class="form-label") }}
+                                    {{ form.to_location(class="form-select") }}
+                                    {% if form.to_location.errors %}
+                                        <div class="text-danger mt-1">
+                                            {% for error in form.to_location.errors %}
+                                                <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.driver_name.label(class="form-label") }}
+                                    {{ form.driver_name(class="form-control", placeholder="e.g., John Doe") }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.truck_number.label(class="form-label") }}
+                                    {{ form.truck_number(class="form-control", placeholder="e.g., KA-01-AB-1234") }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.qty.label(class="form-label") }}
+                            {{ form.qty(class="form-control") }}
+                            {% if form.qty.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.qty.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('movements') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i>Back to Movements
+                            </a>
+                            {{ form.submit(class="btn btn-warning") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

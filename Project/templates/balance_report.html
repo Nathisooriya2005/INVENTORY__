@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Balance Report - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>
+                    <i class="fas fa-chart-bar me-2"></i>Balance Report
+                </h1>
+                <div>
+                    <button onclick="window.print()" class="btn btn-outline-secondary">
+                        <i class="fas fa-print me-1"></i>Print Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-warehouse me-2"></i>Current Inventory Balance by Location
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if balance_list %}
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Warehouse</th>
+                                        <th class="text-end">Quantity</th>
+                                        <th class="text-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in balance_list %}
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <strong>{{ item.product_id }}</strong>
+                                                <br><small class="text-muted">{{ item.product_name }}</small>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <strong>{{ item.location_id }}</strong>
+                                                <br><small class="text-muted">{{ item.location_name }}</small>
+                                            </div>
+                                        </td>
+                                        <td class="text-end">
+                                            <span class="fs-5 fw-bold {% if item.balance > 0 %}text-success{% else %}text-danger{% endif %}">
+                                                {{ item.balance }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            {% if item.balance > 0 %}
+                                                <span class="badge bg-success">In Stock</span>
+                                            {% elif item.balance == 0 %}
+                                                <span class="badge bg-warning">Empty</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Low Stock</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Summary Statistics -->
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h4 class="text-primary">{{ balance_list|length }}</h4>
+                                        <small class="text-muted">Total Entries</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h4 class="text-success">{{ balance_list|selectattr('balance', 'gt', 0)|list|length }}</h4>
+                                        <small class="text-muted">Positive Balances</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h4 class="text-danger">{{ balance_list|selectattr('balance', 'lt', 0)|list|length }}</h4>
+                                        <small class="text-muted">Low Stock Entries</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">No inventory data found</h5>
+                            <p class="text-muted">Start by adding products, locations, and recording movements to see the balance report.</p>
+                            <div class="mt-3">
+                                <a href="{{ url_for('add_product') }}" class="btn btn-primary me-2">
+                                    <i class="fas fa-box me-1"></i>Add Product
+                                </a>
+                                <a href="{{ url_for('add_location') }}" class="btn btn-success me-2">
+                                    <i class="fas fa-map-marker-alt me-1"></i>Add Location
+                                </a>
+                                <a href="{{ url_for('add_movement') }}" class="btn btn-warning">
+                                    <i class="fas fa-exchange-alt me-1"></i>Add Movement
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    .btn, .navbar, .flash-messages {
+        display: none !important;
+    }
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+</style>
+{% endblock %}

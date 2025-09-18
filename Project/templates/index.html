@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">
+                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+            </h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title">Products</h5>
+                            <p class="card-text">Manage your inventory items</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-box fa-2x"></i>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('products') }}" class="btn btn-light btn-sm mt-2">
+                        <i class="fas fa-eye me-1"></i>View All
+                    </a>
+                    <a href="{{ url_for('add_product') }}" class="btn btn-outline-light btn-sm mt-2">
+                        <i class="fas fa-plus me-1"></i>Add New
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title">Locations</h5>
+                            <p class="card-text">Manage warehouse locations</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-map-marker-alt fa-2x"></i>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('locations') }}" class="btn btn-light btn-sm mt-2">
+                        <i class="fas fa-eye me-1"></i>View All
+                    </a>
+                    <a href="{{ url_for('add_location') }}" class="btn btn-outline-light btn-sm mt-2">
+                        <i class="fas fa-plus me-1"></i>Add New
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-warning">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title">Movements</h5>
+                            <p class="card-text">Track product movements</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-exchange-alt fa-2x"></i>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('movements') }}" class="btn btn-light btn-sm mt-2">
+                        <i class="fas fa-eye me-1"></i>View All
+                    </a>
+                    <a href="{{ url_for('add_movement') }}" class="btn btn-outline-light btn-sm mt-2">
+                        <i class="fas fa-plus me-1"></i>Add New
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title">Reports</h5>
+                            <p class="card-text">View inventory balance</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-chart-bar fa-2x"></i>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('balance_report') }}" class="btn btn-light btn-sm mt-2">
+                        <i class="fas fa-chart-bar me-1"></i>Balance Report
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Quick Start Guide
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6><i class="fas fa-box text-primary me-2"></i>Step 1: Add Products</h6>
+                            <p class="text-muted">Start by adding your inventory products with unique IDs and descriptions.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6><i class="fas fa-map-marker-alt text-success me-2"></i>Step 2: Add Locations</h6>
+                            <p class="text-muted">Create warehouse locations where your products will be stored.</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6><i class="fas fa-exchange-alt text-warning me-2"></i>Step 3: Record Movements</h6>
+                            <p class="text-muted">Track product movements between locations to maintain accurate inventory.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
